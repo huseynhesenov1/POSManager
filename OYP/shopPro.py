@@ -198,39 +198,111 @@ class mywindow(QtWidgets.QMainWindow):
             Popen(["python", "Login.py"])
 
 
+        # def PDFYaz(self, fiscal_id=None, cashier_name=None):
+        #     pdfmetrics.registerFont(
+        #         TTFont('Arial', 'C:\\Windows\\Fonts\\arial.ttf'))
+        #     tarix_saat = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     downloads = os.path.join(os.path.expanduser("~"), "Downloads")
+        #     if not os.path.exists(downloads):
+        #         os.makedirs(downloads)
+        #     pdf_path = os.path.join(downloads, f"cek_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.pdf")
+
+        #     c = canvas.Canvas(pdf_path, pagesize=A4)
+        #     width, height = A4
+
+        #     # Logo
+        #     logo_path = "C:\\Users\\ACER\\Desktop\\logo\\loqomain.png"
+        #     if os.path.exists(logo_path):
+        #         logo = ImageReader(logo_path)
+        #         c.drawImage(logo, 50, height - 80, width=80, height=50, mask='auto')
+
+        #     c.setFont("Arial", 14)
+        #     c.drawString(200, height - 50, "ÇEK QƏBZI")
+
+        #     # Tarix, saat və kassir adı
+        #     c.setFont("Arial", 10)
+        #     y = height - 90
+        #     c.drawString(400, y, f"Tarix və Saat: {tarix_saat}")
+        #     y -= 15
+        #     if cashier_name:
+        #         c.drawString(400, y, f"Kassir: {cashier_name}")
+        #     else:
+        #         c.drawString(400, y, f"Kassir: Bilinməyən")
+
+        #     # Cədvəlin başlıqları
+        #     y = height - 130
+        #     c.drawString(50, y, "Məhsul")
+        #     c.drawString(200, y, "Say")
+        #     c.drawString(260, y, "Qiymət")
+        #     c.drawString(330, y, "Məbləğ")
+        #     y -= 20
+
+        #     umumi_mebleg = 0
+
+        #     for row in range(self.ui.table.rowCount()):
+        #         ad = self.ui.table.item(row, 1).text()
+        #         say = int(self.ui.table.item(row, 2).text())
+        #         qiymet = float(self.ui.table.item(row, 3).text())
+        #         mebleg = say * qiymet
+        #         umumi_mebleg += mebleg
+        #         c.drawString(50, y, ad)
+        #         c.drawString(200, y, str(say))
+        #         c.drawString(260, y, f"{qiymet:.2f}")
+        #         c.drawString(330, y, f"{mebleg:.2f}")
+        #         y -= 20
+        #         if y < 120:
+        #             c.showPage()
+        #             y = height - 100
+        #             c.setFont("Arial", 10)
+
+        #     c.setFont("Arial", 12)
+        #     c.drawString(50, y - 20, f"CƏMİ MƏBLƏĞ: {umumi_mebleg:.2f} AZN")
+
+        #     # Barkod üçün
+        #     if fiscal_id:
+        #         barcode = code128.Code128(fiscal_id, barHeight=20*mm, barWidth=0.5)
+        #         barcode_x = 50
+        #         barcode_y = 50
+        #         barcode.drawOn(c, barcode_x, barcode_y)
+        #         c.setFont("Arial", 8)
+        #         c.drawString(barcode_x, barcode_y - 10, f"Fiskal ID: {fiscal_id}")
+
+        #     c.save()
+        #     QMessageBox.information(self, "PDF yaradıldı", f"Çek PDF olaraq saxlanıldı:\n{pdf_path}")
+
+
+
         def PDFYaz(self, fiscal_id=None, cashier_name=None):
             pdfmetrics.registerFont(
-                TTFont('Arial', 'C:\\Windows\\Fonts\\arial.ttf'))
+                TTFont('Arial', 'C:\\Windows\\Fonts\\arial.ttf'))  # Font qeydiyyatı
+
             tarix_saat = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             downloads = os.path.join(os.path.expanduser("~"), "Downloads")
             if not os.path.exists(downloads):
                 os.makedirs(downloads)
-            pdf_path = os.path.join(downloads, f"cek_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.pdf")
 
+            pdf_path = os.path.join(downloads, f"cek_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.pdf")
             c = canvas.Canvas(pdf_path, pagesize=A4)
             width, height = A4
 
-            # Logo
+            # Logo əlavə et (əgər varsa)
             logo_path = "C:\\Users\\ACER\\Desktop\\logo\\loqomain.png"
             if os.path.exists(logo_path):
                 logo = ImageReader(logo_path)
                 c.drawImage(logo, 50, height - 80, width=80, height=50, mask='auto')
 
+            # Başlıq
             c.setFont("Arial", 14)
             c.drawString(200, height - 50, "ÇEK QƏBZI")
 
-            # Tarix, saat və kassir adı
+            # Tarix və Kassir adı
             c.setFont("Arial", 10)
-            y = height - 90
-            c.drawString(400, y, f"Tarix və Saat: {tarix_saat}")
-            y -= 15
-            if cashier_name:
-                c.drawString(400, y, f"Kassir: {cashier_name}")
-            else:
-                c.drawString(400, y, f"Kassir: Bilinməyən")
+            c.drawString(400, height - 70, f"Tarix: {tarix_saat}")
+            c.drawString(400, height - 85, f"Kassir: {cashier_name or 'Bilinməyən'}")
 
-            # Cədvəlin başlıqları
-            y = height - 130
+            # Cədvəl başlıqları
+            y = height - 120
+            c.setFont("Arial", 10)
             c.drawString(50, y, "Məhsul")
             c.drawString(200, y, "Say")
             c.drawString(260, y, "Qiymət")
@@ -239,40 +311,43 @@ class mywindow(QtWidgets.QMainWindow):
 
             umumi_mebleg = 0
 
+            # Məhsul siyahısı
             for row in range(self.ui.table.rowCount()):
                 ad = self.ui.table.item(row, 1).text()
                 say = int(self.ui.table.item(row, 2).text())
                 qiymet = float(self.ui.table.item(row, 3).text())
                 mebleg = say * qiymet
                 umumi_mebleg += mebleg
+
                 c.drawString(50, y, ad)
                 c.drawString(200, y, str(say))
                 c.drawString(260, y, f"{qiymet:.2f}")
                 c.drawString(330, y, f"{mebleg:.2f}")
                 y -= 20
-                if y < 120:
+
+                # Səhifə daşmasın deyə yoxla
+                if y < 100:
                     c.showPage()
                     y = height - 100
                     c.setFont("Arial", 10)
 
+            # Ümumi məbləğ
             c.setFont("Arial", 12)
-            c.drawString(50, y - 20, f"CƏMİ MƏBLƏĞ: {umumi_mebleg:.2f} AZN")
+            c.drawString(50, y - 10, f"CƏMİ MƏBLƏĞ: {umumi_mebleg:.2f} AZN")
+            y -= 40
 
-            # Barkod üçün
+            # Barkod əlavə et
             if fiscal_id:
                 barcode = code128.Code128(fiscal_id, barHeight=20*mm, barWidth=0.5)
                 barcode_x = 50
-                barcode_y = 50
+                barcode_y = y - 30
                 barcode.drawOn(c, barcode_x, barcode_y)
                 c.setFont("Arial", 8)
                 c.drawString(barcode_x, barcode_y - 10, f"Fiskal ID: {fiscal_id}")
 
             c.save()
+
             QMessageBox.information(self, "PDF yaradıldı", f"Çek PDF olaraq saxlanıldı:\n{pdf_path}")
-
-
-
-
 
 
 
