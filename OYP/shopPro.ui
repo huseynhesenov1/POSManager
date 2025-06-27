@@ -20,7 +20,7 @@
       <x>40</x>
       <y>70</y>
       <width>631</width>
-      <height>751</height>
+      <height>771</height>
      </rect>
     </property>
     <property name="baseSize">
@@ -58,7 +58,7 @@
    <widget class="QLineEdit" name="LE">
     <property name="geometry">
      <rect>
-      <x>740</x>
+      <x>790</x>
       <y>70</y>
       <width>221</width>
       <height>41</height>
@@ -68,7 +68,7 @@
    <widget class="QPushButton" name="send">
     <property name="geometry">
      <rect>
-      <x>1110</x>
+      <x>1160</x>
       <y>70</y>
       <width>93</width>
       <height>41</height>
@@ -81,7 +81,7 @@
    <widget class="QSpinBox" name="sp">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>1050</x>
       <y>70</y>
       <width>81</width>
       <height>41</height>
@@ -94,7 +94,7 @@
    <widget class="QPushButton" name="tamamla">
     <property name="geometry">
      <rect>
-      <x>1120</x>
+      <x>1170</x>
       <y>170</y>
       <width>81</width>
       <height>41</height>
@@ -107,10 +107,10 @@
    <widget class="QPushButton" name="btnSil">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>240</y>
-      <width>93</width>
-      <height>28</height>
+      <x>700</x>
+      <y>70</y>
+      <width>61</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -128,6 +128,58 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="L2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="L3">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>30</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="OK4">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>760</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(152, 180, 208);</string>
+    </property>
+    <property name="text">
+     <string> çıxış</string>
     </property>
    </widget>
   </widget>

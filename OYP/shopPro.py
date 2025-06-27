@@ -16,6 +16,8 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import ImageReader
+import json
+from subprocess import Popen
 
 pr = 'shopPro.ui'
 Ui_MainWindow, QtBaseClass = uic.loadUiType(pr)
@@ -31,10 +33,32 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.send.clicked.connect(self.Send)
         self.ui.tamamla.clicked.connect(self.Tamamla)
         self.ui.btnSil.clicked.connect(self.verify_and_delete)
-
+        self.ui.OK4.clicked.connect(self.logout)  # logout düyməsi
         self.ui.table.setColumnCount(5)
         self.ui.table.setHorizontalHeaderLabels([
             "Nömrə", "Ad", "Say", "Məbləğ", "Cəm"])
+        try:
+            with open("session.json", "r", encoding="utf-8") as f:
+                user_info = json.load(f)
+                full_name = f"{user_info['first_name']} {user_info['last_name']}"
+                role = user_info['role']
+
+                self.ui.L2.setText(full_name)
+                self.ui.L3.setText(role)
+        except Exception as e:
+            print("İstifadəçi məlumatı oxunmadı:", e)
+            self.ui.L2.setText("Bilinməyən istifadəçi")
+            self.ui.L3.setText("N/A")
+
+    def logout(self):
+        # session.json faylını sil
+        if os.path.exists("session.json"):
+            os.remove("session.json")
+        # Cari pəncərəni bağla
+        self.close()
+        # Login pəncərəsini aç (login.py-ni işə sal)
+        Popen(["python", "Login.py"])
+
 
     def Send(self):
         barkod = self.ui.LE.text()
